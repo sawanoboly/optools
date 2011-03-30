@@ -4,3 +4,4 @@
       list: list all available sites
       enable {sitename}: enable site and reload nginx
       disable {sitename}: disable site and reload nginx
+
