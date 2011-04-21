@@ -30,7 +30,8 @@ def enable(sitename)
   elsif File.exist?(AvailDir + sitename) then
     puts "enable: " + sitename
     File.symlink(AvailDir + sitename, EnableDir + sitename)
-    puts `/etc/init.d/nginx reload`
+    # puts `/etc/init.d/nginx reload`
+    puts `nginx -t`
   else
     puts "Site:" + sitename + " Config not found."
   end
@@ -42,7 +43,8 @@ def disable(sitename)
     if File.exist?(EnableDir + sitename) then
       puts "disable: " + sitename
       File.unlink(EnableDir + sitename)
-      puts `/etc/init.d/nginx reload`
+      # puts `/etc/init.d/nginx reload`
+      puts `nginx -t`
     else
       puts "Site:" + sitename + " is already disabled.\nDo nothing."
     end
@@ -60,8 +62,8 @@ rescue TypeError => ex then
   Nginx site control script.
   Usage:
     list: list all available sites
-    enable {sitename}: enable site and reload nginx
-    disable {sitename}: disable site and reload nginx
+    enable {sitename}: enable site and configtest
+    disable {sitename}: disable site and configtest
 HEREDOCS
 rescue => ex
   puts "Exception " + "#{ex.class}"
@@ -71,7 +73,7 @@ rescue => ex
   Nginx site control script.
   Usage:
     list: list all available sites
-    enable {sitename}: enable site and reload nginx
-    disable {sitename}: disable site and reload nginx
+    enable {sitename}: enable site and configtest
+    disable {sitename}: disable site and configtest
 HEREDOCS
 end
